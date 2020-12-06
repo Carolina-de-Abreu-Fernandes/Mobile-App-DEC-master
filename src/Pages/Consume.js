@@ -1,14 +1,19 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-const Consume = () => (
-  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <Text> Hi </Text>
-  </View>
-);
+export function Consume() {
+  return (
+    <View style={styles.container}>
+      <Text> Tela de Gastos Mensais</Text>
+    </View>
+  );
+}
 
-Consume.navigationOptions = {
-  title: 'Consumo',
-};
-
-export default Consume;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#111',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

@@ -9,7 +9,7 @@ import Dots from '../assets/img/vertical-dots.png';
 const Background = ({ children }) => {
   return (
     <LinearGradient
-      colors={['#1311', '#1121']}
+      colors={['#111', '#1222']}
       style={{
         flex: 1,
         paddingTop: 50,

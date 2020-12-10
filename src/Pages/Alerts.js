@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import OneSignal from 'react-native-onesignal';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Alert, Button, Image, StyleSheet, View } from 'react-native';
 import styled from 'styled-components';
@@ -6,6 +7,23 @@ import styled from 'styled-components';
 import Arrow from '../assets/img/arrow-down.png';
 import Dots from '../assets/img/vertical-dots.png';
 
+// Your App ID: bd41bc87-4194-4327-bad8-a9c02ff7a701
+
+useEffect(() => {
+  OneSignal.init('bd41bc87-4194-4327-bad8-a9c02ff7a701');
+
+  OneSignal.addEventListener('opened', onOpened);
+
+  return () => OnSignal.removeEventListener('opened', onOpened);
+}, []);
+
+function onOpened(results) {
+  return;
+  {
+    console.log('Message:', results.notification.payload.body);
+    console.log('Results:', results);
+  }
+}
 const Background = ({ children }) => {
   return (
     <LinearGradient

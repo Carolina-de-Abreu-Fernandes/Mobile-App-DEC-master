@@ -1,13 +1,5 @@
 import React from 'react';
-import Home from './Pages/Home';
-import Consume from './Pages/Consume';
-import { createAppContainer, createStackNavigator } from 'react-navigation';
+import ReactDOM from 'react-dom';
+import App from './components/App';
 
-const Routes = createAppContainer(
-  createStackNavigator({
-    Home: Home,
-    Consumo: Consume,
-  })
-);
-
-export default Routes;
+ReactDOM.render(<App />, document.getElementById('root'));

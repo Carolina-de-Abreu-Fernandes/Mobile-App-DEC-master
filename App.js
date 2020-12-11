@@ -10,11 +10,11 @@ import {
   Animated,
   Keyboard,
 } from 'react-native';
-import { Logo } from './src/assets/img/icon.png';
+
 export default function App() {
-  const [offset] = useState(new Animated.ValueXY({ x: 0, y: 95 }));
+  const [offset] = useState(new Animated.ValueXY({ x: 10, y: 80 }));
   const [opacity] = useState(new Animated.Value(0));
-  const [logo] = useState(new Animated.ValueXY({ x: 130, y: 155 }));
+  const [logo] = useState(new Animated.ValueXY({ x: 160, y: 160 }));
   useEffect(() => {
     keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -41,11 +41,11 @@ export default function App() {
   function keyboardDidShow() {
     Animated.parallel([
       Animated.timing(logo.x, {
-        toValue: 55,
+        toValue: 60,
         duration: 100,
       }),
       Animated.timing(logo.y, {
-        toValue: 65,
+        toValue: 60,
         duration: 100,
       }),
     ]).start();
@@ -57,7 +57,7 @@ export default function App() {
         duration: 100,
       }),
       Animated.timing(logo.y, {
-        toValue: 155,
+        toValue: 130,
         duration: 100,
       }),
     ]).start();
@@ -70,37 +70,39 @@ export default function App() {
             width: logo.x,
             height: logo.y,
           }}
-          source={Logo}
+          source={require('./src/assets/img/texturw.jpg')}
         />
       </View>
-      <Animated.View
-        styles={[
-          styles.container,
-          {
-            opacity: opacity,
-            transform: [{ translateY: offset.y }],
-          },
-        ]}
-      >
-        <TextInput
-          style={styles.input}
-          placeholder="E-mail"
-          autoCorrect={false}
-          onChangeText={() => {}}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          autoCorrect={false}
-          onChangeText={() => {}}
-        />
-        <TouchableOpacity style={styles.signIn}>
-          <Text style={styles.signInText}>Sign In</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.signUp}>
-          <Text style={styles.signUp}>Sign Up</Text>
-        </TouchableOpacity>
-      </Animated.View>
+      <View style={styles.none}>
+        <Animated.View
+          styles={[
+            styles.container,
+            {
+              opacity: opacity,
+              transform: [{ translateY: offset.y }],
+            },
+          ]}
+        >
+          <TextInput
+            style={styles.input}
+            placeholder="E-mail"
+            autoCorrect={false}
+            onChangeText={() => {}}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            autoCorrect={false}
+            onChangeText={() => {}}
+          />
+          <TouchableOpacity style={styles.signIn}>
+            <Text style={styles.signInText}>Sign In</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.signUp}>
+            <Text style={styles.signUpText}>Sign Up</Text>
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -110,11 +112,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#151515',
+    backgroundColor: '#152525',
+    marginTop: 30,
   },
   image: {
     flex: 1,
     justifyContent: 'center',
+    paddingTop: 80,
+    paddingBottom: 5,
   },
   container: {
     flex: 1,
@@ -125,31 +130,37 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: '#fff',
-    width: '90%',
-    marginBottom: 15,
+    marginBottom: 20,
     color: '#222',
-    fontSize: 17,
+    fontSize: 19,
     borderRadius: 8,
-    padding: 10,
+    padding: 20,
+    height: 60,
+    width: 190,
   },
   signIn: {
     backgroundColor: '#55a630',
-    width: '90%',
     height: 45,
+
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,
   },
   signInText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 20,
   },
   signUp: {
+    alignItems: 'center',
     color: '#2b9348',
-    marginTop: 10,
-    borderRadius: 8,
+    marginTop: 15,
   },
   signUpText: {
     color: '#fff',
+    justifyContent: 'center',
+  },
+  none: {
+    padding: 50,
+    marginBottom: 10,
   },
 });

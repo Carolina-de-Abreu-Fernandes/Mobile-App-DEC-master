@@ -9,12 +9,13 @@ import {
   StyleSheet,
   Animated,
   Keyboard,
+  ImageBackground,
 } from 'react-native';
 
 export default function App() {
   const [offset] = useState(new Animated.ValueXY({ x: 10, y: 80 }));
   const [opacity] = useState(new Animated.Value(0));
-  const [logo] = useState(new Animated.ValueXY({ x: 160, y: 160 }));
+  const [logo] = useState(new Animated.ValueXY({ x: 180, y: 180 }));
   useEffect(() => {
     keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -70,7 +71,7 @@ export default function App() {
             width: logo.x,
             height: logo.y,
           }}
-          source={require('./src/assets/img/texturw.jpg')}
+          source={require('./src/assets/img/logo_menor.png')}
         />
       </View>
       <View style={styles.none}>
@@ -113,13 +114,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#152525',
-    marginTop: 30,
+    marginTop: 25,
   },
   image: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
     paddingTop: 80,
-    paddingBottom: 5,
   },
   container: {
     flex: 1,

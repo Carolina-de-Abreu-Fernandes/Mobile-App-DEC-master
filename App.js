@@ -1,167 +1,78 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Image,
-  KeyboardAvoidingView,
-  TextInput,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  Animated,
-  Keyboard,
-  ImageBackground,
-} from 'react-native';
+import React from 'react';
 
-export default function App() {
-  const [offset] = useState(new Animated.ValueXY({ x: 10, y: 80 }));
-  const [opacity] = useState(new Animated.Value(0));
-  const [logo] = useState(new Animated.ValueXY({ x: 180, y: 180 }));
-  useEffect(() => {
-    keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      keyboardDidShow
-    );
-    keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      keyboardDidHide
-    );
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/Feather';
 
-    Animated.parallel([
-      Animated.spring(offset.y, {
-        toValue: 0,
-        speed: 4,
-        bounciness: 20,
-      }),
-      Animated.timing(opacity, {
-        toValue: 1,
-        duration: 200,
-      }),
-    ]).start();
-  }, []);
+import Home from './src/Pages/Home';
+import Register from './src/Pages/Register';
+import Consume from './src/Pages/Consume';
+import Alerts from './src/Pages/Alerts';
 
-  function keyboardDidShow() {
-    Animated.parallel([
-      Animated.timing(logo.x, {
-        toValue: 60,
-        duration: 100,
-      }),
-      Animated.timing(logo.y, {
-        toValue: 60,
-        duration: 100,
-      }),
-    ]).start();
-  }
-  function keyboardDidHide() {
-    Animated.parallel([
-      Animated.timing(logo.x, {
-        toValue: 130,
-        duration: 100,
-      }),
-      Animated.timing(logo.y, {
-        toValue: 130,
-        duration: 100,
-      }),
-    ]).start();
-  }
+const Stack = createStackNavigator();
+
+const Tab = createBottomTabNavigator();
+
+function Tabs() {
   return (
-    <KeyboardAvoidingView style={styles.background}>
-      <View style={styles.image}>
-        <Animated.Image
-          style={{
-            width: logo.x,
-            height: logo.y,
-          }}
-          source={require('./src/assets/img/logo_menor.png')}
-        />
-      </View>
-      <View style={styles.none}>
-        <Animated.View
-          styles={[
-            styles.container,
-            {
-              opacity: opacity,
-              transform: [{ translateY: offset.y }],
-            },
-          ]}
-        >
-          <TextInput
-            style={styles.input}
-            placeholder="E-mail"
-            autoCorrect={false}
-            onChangeText={() => {}}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            autoCorrect={false}
-            onChangeText={() => {}}
-          />
-          <TouchableOpacity style={styles.signIn}>
-            <Text style={styles.signInText}>Sign In</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.signUp}>
-            <Text style={styles.signUpText}>Sign Up</Text>
-          </TouchableOpacity>
-        </Animated.View>
-      </View>
-    </KeyboardAvoidingView>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+          switch (route.name) {
+            case 'Consumo':
+              iconName = 'list';
+              break;
+            case 'Notificações':
+              iconName = 'bell';
+              break;
+          }
+
+          return <Icon name={iconName} size={size} color={color} />;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: '#152525',
+        inactiveTintColor: '#1e3535',
+        showLabel: false,
+        style: {
+          backgroundColor: '#fffceb',
+        },
+      }}
+    >
+      <Tab.Screen name="Consumo" component={Consume} />
+      <Tab.Screen name="Notificações" component={Alerts} />
+    </Tab.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#152525',
-    marginTop: 25,
-  },
-  image: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 80,
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '90%',
-    paddingBottom: 50,
-  },
-  input: {
-    backgroundColor: '#fff',
-    marginBottom: 20,
-    color: '#222',
-    fontSize: 19,
-    borderRadius: 8,
-    padding: 20,
-    height: 60,
-    width: 190,
-  },
-  signIn: {
-    backgroundColor: '#55a630',
-    height: 45,
-
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 8,
-  },
-  signInText: {
-    color: '#fff',
-    fontSize: 20,
-  },
-  signUp: {
-    alignItems: 'center',
-    color: '#2b9348',
-    marginTop: 15,
-  },
-  signUpText: {
-    color: '#fff',
-    justifyContent: 'center',
-  },
-  none: {
-    padding: 50,
-    marginBottom: 10,
-  },
-});
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Register">
+        <Stack.Screen
+          name="Register"
+          component={Register}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Home"
+          component={Tabs}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Consume"
+          component={Consume}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}

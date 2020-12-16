@@ -1,55 +1,38 @@
-import React, { useEffect } from 'react';
-import OneSignal from 'react-native-onesignal';
+import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Alert, Button, Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import styled from 'styled-components';
 
-import Arrow from '../assets/img/arrow-down.png';
-import Dots from '../assets/img/vertical-dots.png';
+import { Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Feather';
 
-// Your App ID: bd41bc87-4194-4327-bad8-a9c02ff7a701
-
-useEffect(() => {
-  OneSignal.init('bd41bc87-4194-4327-bad8-a9c02ff7a701');
-
-  OneSignal.addEventListener('opened', onOpened);
-
-  return () => OnSignal.removeEventListener('opened', onOpened);
-}, []);
-
-function onOpened(results) {
-  return;
-  {
-    console.log('Message:', results.notification.payload.body);
-    console.log('Results:', results);
-  }
-}
 const Background = ({ children }) => {
   return (
     <LinearGradient
-      colors={['#1311', '#1121']}
+      colors={['#111', '#152525']}
       style={{
         flex: 1,
-        paddingTop: 50,
+        paddingTop: 30,
+        marginTop: 25,
       }}
     >
       {children}
     </LinearGradient>
   );
 };
-const TobBar = styled.View`
+const TopBar = styled.View`
   flex-direction: row;
 `;
 
-TobBar.Left = styled.View`
+TopBar.Left = styled.View`
   flex: 1;
   padding-left: 16px;
 `;
-TobBar.Middle = styled.View`
+TopBar.Middle = styled.View`
   flex: 2;
   align-items: center;
 `;
-TobBar.Right = styled.View`
+TopBar.Right = styled.View`
   flex: 1;
   padding-right: 16px;
   align-items: flex-end;
@@ -64,59 +47,34 @@ TopBar.SubTitle = styled.Text`
   font-weight: bold;
 `;
 
-export function Consume() {
-  const createTwoButtonAlert = () =>
-    Alert.alert(
-      'Alert Title',
-      'My Alert Msg',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        { text: 'OK', onPress: () => console.log('OK Pressed') },
-      ],
-      { cancelable: false }
-    );
-
-  const createThreeButtonAlert = () =>
-    Alert.alert(
-      'Alert Title',
-      'My Alert Msg',
-      [
-        {
-          text: 'Ask me later',
-          onPress: () => console.log('Ask me later pressed'),
-        },
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        { text: 'OK', onPress: () => console.log('OK Pressed') },
-      ],
-      { cancelable: false }
-    );
+export default function Consume({ navigation }) {
   return (
     <Background>
       <TopBar>
         <TopBar.Left>
-          <Image source={Arrow} style={{ width: 20, height: 20 }} />
+          <Button
+            type="clear"
+            onPress={() => navigation.goBack()}
+            icon={<Icon name="chevron-left" size={16} color="#fffceb" />}
+          />
         </TopBar.Left>
         <TopBar.Middle>
-          <TopBar.Title> Seus Alertas</TopBar.Title>
-          <TopBar.SubTitle> Avisos </TopBar.SubTitle>
+          <TopBar.Title> Notificações </TopBar.Title>
         </TopBar.Middle>
         <TopBar.Right>
-          <Image source={Dots} style={{ width: 20, height: 20 }} />
+          <Button
+            type="clear"
+            icon={
+              <Icon
+                name="more-vertical"
+                size={16}
+                color="#fffceb"
+                backgroundColor="transparent"
+              />
+            }
+          />
         </TopBar.Right>
       </TopBar>
-      <View style={styles.container}>
-        <Button title="2-Button Alert" onPress={createTwoButtonAlert} />
-
-        <Button title="3-Button Alert" onPress={createThreeButtonAlert} />
-      </View>
     </Background>
   );
 }

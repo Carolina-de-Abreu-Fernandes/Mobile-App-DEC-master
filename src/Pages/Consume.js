@@ -1,37 +1,38 @@
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Image } from 'react-native';
-import styled from 'styled-components';
 
-import Arrow from '../assets/img/arrow-down.png';
-import Dots from '../assets/img/vertical-dots.png';
+import { Image, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import styled from 'styled-components';
+import { Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Feather';
 
 const Background = ({ children }) => {
   return (
     <LinearGradient
-      colors={['#111', '#1222']}
+      colors={['#111', '#152525']}
       style={{
         flex: 1,
-        paddingTop: 50,
+        paddingTop: 30,
+        marginTop: 25,
       }}
     >
       {children}
     </LinearGradient>
   );
 };
-const TobBar = styled.View`
+const TopBar = styled.View`
   flex-direction: row;
 `;
 
-TobBar.Left = styled.View`
+TopBar.Left = styled.View`
   flex: 1;
   padding-left: 16px;
 `;
-TobBar.Middle = styled.View`
+TopBar.Middle = styled.View`
   flex: 2;
   align-items: center;
 `;
-TobBar.Right = styled.View`
+TopBar.Right = styled.View`
   flex: 1;
   padding-right: 16px;
   align-items: flex-end;
@@ -43,22 +44,35 @@ TopBar.Title = styled.Text`
 `;
 TopBar.SubTitle = styled.Text`
   color: white;
-  font-weight: bold;
+  text-transform: uppercase;
 `;
 
-export function Consume() {
+export default function Consume({ navigation }) {
   return (
     <Background>
       <TopBar>
         <TopBar.Left>
-          <Image source={Arrow} style={{ width: 20, height: 20 }} />
+          <Button
+            type="clear"
+            onPress={() => navigation.goBack()}
+            icon={<Icon name="chevron-left" size={16} color="#fffceb" />}
+          />
         </TopBar.Left>
         <TopBar.Middle>
-          <TopBar.Title> Seus Gastos</TopBar.Title>
-          <TopBar.SubTitle> Mensais </TopBar.SubTitle>
+          <TopBar.SubTitle> Consumo</TopBar.SubTitle>
         </TopBar.Middle>
         <TopBar.Right>
-          <Image source={Dots} style={{ width: 20, height: 20 }} />
+          <Button
+            type="clear"
+            icon={
+              <Icon
+                name="more-vertical"
+                size={16}
+                color="#fffceb"
+                backgroundColor="transparent"
+              />
+            }
+          />
         </TopBar.Right>
       </TopBar>
     </Background>
